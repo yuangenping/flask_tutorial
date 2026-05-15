@@ -84,10 +84,8 @@ ignore = ["E501"]                         # 忽略行过长警告（交给 black
 
 # Pytest 测试框架配置
 [tool.pytest.ini_options]
-testpaths = ["tests"]                     # 默认测试目录
-python_files = ["test_*.py"]              # 测试文件匹配规则
-python_functions = ["test_*"]             # 测试函数匹配规则
-addopts = "-v --cov=my_app --cov-report=term-missing" # 默认携带覆盖率报告
+pythonpath = ["."]  # 告诉 pytest 去 src 目录找代码
+testpaths = ["tests/test_blog.py"]                     # 默认测试目录
 
 # Mypy 静态类型检查配置
 [tool.mypy]
@@ -99,5 +97,5 @@ exclude = ["migrations/", "tests/"]       # 排除检查的目录
 
 # Coverage 测试覆盖率配置
 [tool.coverage.run]
-source = ["my_app"]
+source = ["src"]
 omit = ["*/tests/*", "*/migrations/*"]

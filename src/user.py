@@ -61,6 +61,10 @@ class UserAPI(MethodView):
             return False
         return True
 
+class UserLogoutApi(MethodView):
+    def get(self):
+        session.clear()
+        return redirect(url_for('blog.index'))
 
 class UserLoginApi(MethodView):
     def get(self):
@@ -135,5 +139,6 @@ class UserTestRediectLogin(MethodView):
 
 user_bp.add_url_rule("/", view_func=UserAPI.as_view("detail"))
 user_bp.add_url_rule("/login", view_func=UserLoginApi.as_view("login"))
+user_bp.add_url_rule("/logout", view_func=UserLogoutApi.as_view("logout"))
 user_bp.add_url_rule("/register", view_func=UserRegisterAPI.as_view("register"))
 user_bp.add_url_rule("/test", view_func=UserTestRediectLogin.as_view("test"))

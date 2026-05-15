@@ -149,7 +149,7 @@ class BlogDelete(MethodView):
 
         return redirect(url_for('blog.index'))
 
-blog_bp.add_url_rule("/index", view_func=Blog.as_view("index"))
+blog_bp.add_url_rule("", view_func=Blog.as_view("index"))
 blog_bp.add_url_rule("/create", view_func=BlogCreate.as_view("create"))
 blog_bp.add_url_rule("/update/<int:id>", view_func=BlogUpdate.as_view("update"))
 blog_bp.add_url_rule("/update", view_func=BlogUpdate.as_view("updatePost"))

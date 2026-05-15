@@ -5,3 +5,7 @@ src/flask_tutorial.egg-info/dependency_links.txt
 src/flask_tutorial.egg-info/entry_points.txt
 src/flask_tutorial.egg-info/requires.txt
 src/flask_tutorial.egg-info/top_level.txt
+tests/test_blog.py
+tests/test_db.py
+tests/test_factory.py
+tests/test_user.py
