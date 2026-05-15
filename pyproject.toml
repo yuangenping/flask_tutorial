@@ -1,0 +1,103 @@
+# ==================== 1. 项目元数据与核心依赖 ====================
+[project]
+name = "flask_tutorial"          # 项目名称
+version = "1.0.0"                         # 项目版本
+description = "企业级 Flask 生产项目脚手架"
+readme = "README.md"                      # 项目说明文档
+requires-python = ">=3.10"                # 指定最低 Python 版本
+license = "MIT"                # 开源协议
+authors = [                               # 作者信息
+    { name = "YourName", email = "your.email@example.com" }
+]
+keywords = ["flask", "web", "api", "enterprise"] # 项目关键词
+
+# 核心生产依赖（项目上线运行必须安装的库）
+dependencies = [
+    "flask>=3.0.0",
+    "flask-sqlalchemy>=3.1.0",
+    "flask-migrate>=4.0.0",
+    "python-dotenv>=1.0.0",               # 用于加载 .env 环境变量
+    "gunicorn>=21.2.0",                   # 生产环境 WSGI 服务器
+    "redis>=5.0.0",                       # 配合 Redis 缓存或消息队列
+    "structlog>=24.1.0",                  # 生产级结构化日志
+]
+
+# 可选依赖（例如：测试、开发、部署等场景的额外依赖）
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",                      # 单元测试框架
+    "pytest-cov>=4.1.0",                  # 测试覆盖率插件
+    "black>=24.1.0",                      # 代码自动格式化工具
+    "ruff>=0.2.0",                        # 极速代码规范检查（替代 flake8/isort）
+    "mypy>=1.8.0",                        # 静态类型检查
+    "types-redis",                        # Redis 的类型提示存根
+    "httpx>=0.26.0",                      # 用于测试 Flask 接口
+]
+
+# ==================== 2. 命令行入口（可选） ====================
+# 如果你的项目需要打包成 CLI 工具，可以在这里定义
+[project.scripts]
+myflask = "my_app.main:cli"
+
+# ==================== 3. 构建系统配置 ====================
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# 明确指定包所在的目录
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ==================== 4. 开发工具统一配置 ====================
+
+# Black 代码格式化配置
+[tool.black]
+line-length = 100                         # 每行最大字符数
+target-version = ["py310", "py311", "py312"]
+include = '\.pyi?$'                       # 包含的文件类型
+extend-exclude = '''
+# 排除不需要格式化的目录
+/(
+  migrations/
+  | instance/
+  | .venv/
+)/
+'''
+
+# Ruff 代码规范检查配置（极速替代 flake8, isort, pycodestyle 等）
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = ["migrations", "instance", ".venv", "venv"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle 错误
+    "W",   # pycodestyle 警告
+    "F",   # Pyflakes (检查未使用的导入、变量等)
+    "I",   # isort (自动排序导入语句)
+    "B",   # flake8-bugbear (检查常见代码隐患)
+    "C4",  # flake8-comprehensions (优化列表/字典推导式)
+    "UP",  # pyupgrade (自动使用新版 Python 语法)
+]
+ignore = ["E501"]                         # 忽略行过长警告（交给 black 处理）
+
+# Pytest 测试框架配置
+[tool.pytest.ini_options]
+testpaths = ["tests"]                     # 默认测试目录
+python_files = ["test_*.py"]              # 测试文件匹配规则
+python_functions = ["test_*"]             # 测试函数匹配规则
+addopts = "-v --cov=my_app --cov-report=term-missing" # 默认携带覆盖率报告
+
+# Mypy 静态类型检查配置
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true                    # 警告返回值为 Any 的函数
+warn_unused_configs = true                # 警告未使用的配置
+ignore_missing_imports = true             # 忽略没有类型提示的第三方库
+exclude = ["migrations/", "tests/"]       # 排除检查的目录
+
+# Coverage 测试覆盖率配置
+[tool.coverage.run]
+source = ["my_app"]
+omit = ["*/tests/*", "*/migrations/*"]
