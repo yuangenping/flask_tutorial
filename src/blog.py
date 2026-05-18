@@ -106,7 +106,7 @@ class BlogUpdate(MethodView):
         body = form_data.get("body")
         error = ""
         if not title or not body or not id:
-            error = "未找到文章"
+            abort(404)
         else:
             db = get_db()
             cursor = db.cursor()
