@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'macro_util.html' import say_hello %}
+
+{% block title%} 首页 {% endblock %}
+
+{% block content %}
+内容
+{{ say_hello() }}
+
+{{ 'iiii' | say_hello2 }}
+
+{{ format_hello3("王德发") }}
+
+{% for log in logs %}
+
+<div class="test-stream">日志：{{ log }}</div>
+
+{% endfor %}
+
+{% endblock %}

@@ -147,7 +147,8 @@ class BlogDelete(MethodView):
         except db.Error:
             abort(500)
 
-        return redirect(url_for('blog.index'))
+        return redirect(url_for("blog.index"))
+
 
 blog_bp.add_url_rule("", view_func=Blog.as_view("index"))
 blog_bp.add_url_rule("/create", view_func=BlogCreate.as_view("create"))

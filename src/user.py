@@ -61,10 +61,12 @@ class UserAPI(MethodView):
             return False
         return True
 
+
 class UserLogoutApi(MethodView):
     def get(self):
         session.clear()
-        return redirect(url_for('blog.index'))
+        return redirect(url_for("blog.index"))
+
 
 class UserLoginApi(MethodView):
     def get(self):

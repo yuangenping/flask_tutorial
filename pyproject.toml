@@ -20,6 +20,8 @@ dependencies = [
     "gunicorn>=21.2.0",                   # 生产环境 WSGI 服务器
     "redis>=5.0.0",                       # 配合 Redis 缓存或消息队列
     "structlog>=24.1.0",                  # 生产级结构化日志
+    "build>=1.5.0",
+    "black>=26.3.1",
 ]
 
 # 可选依赖（例如：测试、开发、部署等场景的额外依赖）
@@ -99,3 +101,8 @@ exclude = ["migrations/", "tests/"]       # 排除检查的目录
 [tool.coverage.run]
 source = ["src"]
 omit = ["*/tests/*", "*/migrations/*"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.13",
+]

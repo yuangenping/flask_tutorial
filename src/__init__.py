@@ -1,4 +1,5 @@
 import os
+from . import context_processor
 from flask import Flask
 
 
@@ -23,10 +24,13 @@ def create_app(test_config=None):
     def hello():
         return "Hello World"
 
-    from . import db, user, blog
+    from . import db, user, blog, index, html_filter, context_processor
 
     db.init_app(app)
+    html_filter.init(app)
+    context_processor.init(app)
 
+    app.register_blueprint(index.index_bp)
     app.register_blueprint(user.user_bp)
     app.register_blueprint(blog.blog_bp)
 
